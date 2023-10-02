@@ -66,7 +66,7 @@ def make_schema(response: dict, dates: list[str]) -> dict:
     return schema
 
 
-def do_sync(base, start_date: str, end_date: Optional[str] = None) -> Optional[str]:
+def do_sync(access_key, base, start_date: str, end_date: Optional[str] = None) -> Optional[str]:
     state = {"start_date": start_date}
     next_date = start_date
 
@@ -75,6 +75,7 @@ def do_sync(base, start_date: str, end_date: Optional[str] = None) -> Optional[s
             date.today() + timedelta(days=1)).strftime(DATE_FORMAT)
 
     params = {
+        "access_key": access_key,
         "base": base,
         "start_date": start_date,
         "end_date": end_date,
@@ -159,7 +160,7 @@ def main():
 
     next_date = start_date
     while next_date and datetime.strptime(next_date, DATE_FORMAT) < datetime.utcnow():
-        next_date = do_sync(config.get("base", "EUR"), next_date, end_date)
+        next_date = do_sync(config.get("access_key"), config.get("base", "EUR"), next_date, end_date)
 
 
 if __name__ == "__main__":

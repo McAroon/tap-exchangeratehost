@@ -1,4 +1,5 @@
 {
+    "access_key": "**paste your access key here**",
     "base": "JPY",
     "start_date": "2021-04-01",
     "end_date": "2021-04-06"
